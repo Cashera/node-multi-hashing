@@ -5,7 +5,6 @@
 
 extern "C" {
     #include "blake.h"
-    #include "c11.h"
     #include "cryptonight.h"
     #include "cryptonight_fast.h"
     #include "fresh.h"
@@ -13,30 +12,19 @@ extern "C" {
     #include "groestl.h"
     #include "hefty1.h"
     #include "keccak.h"
-    #include "lbry.h"
-    #include "nist5.h"
     #include "quark.h"
     #include "qubit.h"
     #include "scryptjane.h"
     #include "scryptn.h"
     #include "sha1.h"
     #include "sha256d.h"
-    #include "shavite3.h"
     #include "skein.h"
     #include "x11.h"
     #include "x13.h"
     #include "x15.h"
     #include "neoscrypt.h"
     #include "fresh.h"
-    #include "jh.h"
-    #include "x5.h"
-    #include "c11.h"
-    #include "whirlpoolx.h"
-    #include "fresh.h"
-    #include "zr5.h"
-    #include "Lyra2RE.h"
     #include "neoscrypt.h"
-    #include "nist5.h"
     #include "groestl.h"
 }
 
@@ -116,13 +104,10 @@ using namespace v8;
 }
 
  DECLARE_CALLBACK(blake, blake_hash, 32);
- DECLARE_CALLBACK(fresh, fresh_hash, 32);
  DECLARE_CALLBACK(fugue, fugue_hash, 32);
  DECLARE_CALLBACK(groestl, groestl_hash, 32);
  DECLARE_CALLBACK(groestlmyriad, groestlmyriad_hash, 32);
- DECLARE_CALLBACK(hefty1, hefty1_hash, 32);
  DECLARE_CALLBACK(keccak, keccak_hash, 32);
- DECLARE_CALLBACK(lbry, lbry_hash, 32);
  DECLARE_CALLBACK(nist5, nist5_hash, 32);
  DECLARE_CALLBACK(quark, quark_hash, 32);
  DECLARE_CALLBACK(qubit, qubit_hash, 32);
@@ -133,7 +118,6 @@ using namespace v8;
  DECLARE_CALLBACK(x11, x11_hash, 32);
  DECLARE_CALLBACK(x13, x13_hash, 32);
  DECLARE_CALLBACK(x15, x15_hash, 32);
- DECLARE_CALLBACK(lyra2re2, lyra2re2_hash, 32);
 
 DECLARE_FUNC(scrypt) {
    DECLARE_SCOPE;
@@ -348,16 +332,12 @@ DECLARE_FUNC(boolberry) {
 DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "blake", blake);
     NODE_SET_METHOD(exports, "boolberry", boolberry);
-    NODE_SET_METHOD(exports, "c11", c11);
     NODE_SET_METHOD(exports, "cryptonight", cryptonight);
     NODE_SET_METHOD(exports, "cryptonightfast", cryptonightfast);
-    NODE_SET_METHOD(exports, "fresh", fresh);
     NODE_SET_METHOD(exports, "fugue", fugue);
     NODE_SET_METHOD(exports, "groestl", groestl);
     NODE_SET_METHOD(exports, "groestlmyriad", groestlmyriad);
-    NODE_SET_METHOD(exports, "hefty1", hefty1);
     NODE_SET_METHOD(exports, "keccak", keccak);
-    NODE_SET_METHOD(exports, "nist5", nist5);
     NODE_SET_METHOD(exports, "quark", quark);
     NODE_SET_METHOD(exports, "qubit", qubit);
     NODE_SET_METHOD(exports, "scrypt", scrypt);
@@ -370,12 +350,6 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "x13", x13);
     NODE_SET_METHOD(exports, "x15", x15);
     NODE_SET_METHOD(exports, "neoscrypt", neoscrypt);
-    NODE_SET_METHOD(exports, "lyra2re2", lyra2re2);
-    NODE_SET_METHOD(exports, "bcrypt", bcrypt);
-    NODE_SET_METHOD(exports, "shavite3", shavite3);
-    NODE_SET_METHOD(exports, "x14", x14);
-    NODE_SET_METHOD(exports, "whirlpoolx", whirlpoolx);
-    NODE_SET_METHOD(exports, "zr5", zr5);
-    NODE_SET_METHOD(exports, "ziftr",ziftr);
+
 }
 NODE_MODULE(multihashing, init)
