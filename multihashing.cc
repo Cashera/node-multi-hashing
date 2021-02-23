@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 extern "C" {
-    #include "bcrypt.h"
     #include "blake.h"
     #include "c11.h"
     #include "cryptonight.h"
@@ -29,7 +28,6 @@ extern "C" {
     #include "x15.h"
     #include "neoscrypt.h"
     #include "fresh.h"
-    #include "dcrypt.h"
     #include "jh.h"
     #include "x5.h"
     #include "c11.h"
@@ -37,13 +35,9 @@ extern "C" {
     #include "fresh.h"
     #include "zr5.h"
     #include "Lyra2RE.h"
-    #include "yescrypt/yescrypt.h"
-    #include "yescrypt/sha256_Y.h"
     #include "neoscrypt.h"
-    #include "x14.h"
     #include "nist5.h"
     #include "groestl.h"
-    #include "s3.h"
 }
 
 #include "boolberry.h"
@@ -121,9 +115,7 @@ using namespace v8;
     SET_BUFFER_RETURN(output, output_len); \
 }
 
- DECLARE_CALLBACK(bcrypt, bcrypt_hash, 32);
  DECLARE_CALLBACK(blake, blake_hash, 32);
- DECLARE_CALLBACK(c11, c11_hash, 32);
  DECLARE_CALLBACK(fresh, fresh_hash, 32);
  DECLARE_CALLBACK(fugue, fugue_hash, 32);
  DECLARE_CALLBACK(groestl, groestl_hash, 32);
@@ -281,25 +273,6 @@ DECLARE_FUNC(cryptonight) {
     SET_BUFFER_RETURN(output, 32);
 }
 
-DECLARE_FUNC(lyra2re2) {
-    DECLARE_SCOPE;
-
-    if (args.Length() < 1)
-       RETURN_EXCEPT("You must provide one argument.");
-
-    Local<Object> target = args[0]->ToObject();
-
-    if(!Buffer::HasInstance(target))
-        RETURN_EXCEPT("Argument should be a buffer object.");
-
-    char * input = Buffer::Data(target);
-    char output[32];
-
-    lyra2re2_hash(input, output);
-
-     SET_BUFFER_RETURN(output, 32);
-}
-
 DECLARE_FUNC(cryptonightfast) {
     DECLARE_SCOPE;
 
@@ -373,19 +346,17 @@ DECLARE_FUNC(boolberry) {
 }
 
 DECLARE_INIT(init) {
-    NODE_SET_METHOD(exports, "bcrypt", bcrypt);
     NODE_SET_METHOD(exports, "blake", blake);
     NODE_SET_METHOD(exports, "boolberry", boolberry);
     NODE_SET_METHOD(exports, "c11", c11);
     NODE_SET_METHOD(exports, "cryptonight", cryptonight);
-	NODE_SET_METHOD(exports, "cryptonightfast", cryptonightfast);
+    NODE_SET_METHOD(exports, "cryptonightfast", cryptonightfast);
     NODE_SET_METHOD(exports, "fresh", fresh);
     NODE_SET_METHOD(exports, "fugue", fugue);
     NODE_SET_METHOD(exports, "groestl", groestl);
     NODE_SET_METHOD(exports, "groestlmyriad", groestlmyriad);
     NODE_SET_METHOD(exports, "hefty1", hefty1);
     NODE_SET_METHOD(exports, "keccak", keccak);
-    NODE_SET_METHOD(exports, "lbry", lbry);
     NODE_SET_METHOD(exports, "nist5", nist5);
     NODE_SET_METHOD(exports, "quark", quark);
     NODE_SET_METHOD(exports, "qubit", qubit);
@@ -394,7 +365,6 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "scryptn", scryptn);
     NODE_SET_METHOD(exports, "sha1", sha1);
     NODE_SET_METHOD(exports, "sha256d", sha256d);
-    NODE_SET_METHOD(exports, "shavite3", shavite3);
     NODE_SET_METHOD(exports, "skein", skein);
     NODE_SET_METHOD(exports, "x11", x11);
     NODE_SET_METHOD(exports, "x13", x13);
@@ -407,11 +377,5 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "whirlpoolx", whirlpoolx);
     NODE_SET_METHOD(exports, "zr5", zr5);
     NODE_SET_METHOD(exports, "ziftr",ziftr);
-    NODE_SET_METHOD(exports, "yescrypt", yescrypt);
-    NODE_SET_METHOD(exports, "lyra2re", lyra2re);
-    NODE_SET_METHOD(exports, "c11", c11);
-    NODE_SET_METHOD(exports, "dcrypt", dcrypt);
-    NODE_SET_METHOD(exports, "s3", s3);
-    NODE_SET_METHOD(exports, "dh",dh);
 }
 NODE_MODULE(multihashing, init)
